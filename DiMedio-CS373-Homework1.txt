@@ -1,0 +1,25 @@
+﻿Jason DiMedio
+CS373
+June 30, 2019
+Homework 1
+
+
+
+
+A first attempt involved opening all of the tools and running evil.exe. Nothing seems to have happened except the VM became unresponsive.
+
+
+A second attempt involved opening Process Monitor and running evil.exe. Process Monitor revealed certain actions of the evil.exe program. The program seems to check for the existence of the ntldrs folder and/or create it. It accesses the registry. It loads .dlls such as ntdll.dll, kernel32.dll, KernelBase.dll, user32.dll, gdi32.dll, lpk.dll, usp10.dll, msvcrt.dll, advapi32.dll and seems to create files called msvbvm60.dll and sechost.dll. An attempt was made to examine these .dll files directly using a text editor, but they were unreadable. Using Process Explorer, I viewed the .dlls for evil.exe.
+
+
+During a third run of the program, I opened FakeNet and determined that the malware downloads files called "files/File/product/pao.exe" from "www.hisunpharm.com", "w9/blank.gif" from "static.naver.net", "/sun.txt" from "timeless888.com", "tong.htm" from "timeless888.com", "/favicon.ico" from "timeless888.com", and goes to "/fwlink/?LinkId=69157" at "go.microsoft.com". 
+
+
+FlyPaper was used to prevent the malware from closing and thus to determine that files called system.yf and funbots.bat appear and disappear upon each execution of the svchest.exe program. Funbots.bat appeared to include program instructions for scheduling a task every 30 minutes to execute the file svchest.exe. A cmd.exe window was left open that had the following text: "Are you sure (Y/N)? processed file: C:Windows\system32\drivers\etc\hosts".
+
+
+In Process Monitor, processes for iexplore.exe involved going to the timeless888 address. The svchest.exe processes were also explored, and the file was found to create several files, including .dll files. The process appears to open cmd.exe processes. At one point the file creates a file "tongii2.exe" and a file "pao[2].exe".
+
+
+Based upon this analysis, the malware appears to create a file C:\ntldrs\svchest.exe and via task scheduler causes svchest.exe to be executed every 30 minutes. Upon execution of this file, GET requests are sent to timeless888.com, static.naver.net, and 
+www.hisunpharm.com addresses. Executable files are then downloaded and/or created in the temporary internet files and a call to "go.microsoft.com" is made. This appears to be the behavior of a Bot that retrieves instructions from the various addresses and then makes a call to the go.microsoft address based on the retrieved instructions.
